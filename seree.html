@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<!-- สำหรับ iOS Safari -->
+<!-- สำหรับ iOS Safari และ Android -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-<!-- สำหรับ Android Chrome -->
 <meta name="mobile-web-app-capable" content="yes">
-
-<!-- ล็อคขนาดหน้าจอไม่ให้ซูมเข้า-ออกผิดเพี้ยน -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <meta name="google-site-verification" content="-LkgtHlPhP3dcs_a59xVUtoiAAmulU3h-9a_ADQ60QE" />
   <meta charset="UTF-8">
   <title>ดีลดีคาร์</title>
   <meta name="description" content="เราไม่ได้แค่เชื่อมต่อคุณกับรถ แต่เราคือ เกราะป้องกัน ที่ทำให้การซื้อรถมือสองของคุณเปลี่ยนจากเรื่องน่ากังวล ให้กลายเป็นเรื่องที่คุ้มค่าที่สุด">
@@ -22,22 +17,22 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <!-- เร่งการเชื่อมต่อกับ Apps Script -->
   <link rel="preconnect" href="https://script.google.com">
   <link rel="dns-prefetch" href="https://script.google.com">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css">
 
   <style>
     html, body {
       margin: 0;
       padding: 0;
+      width: 100vw;
       height: 100dvh;
       overflow: hidden; 
       font-family: sans-serif;
       background-color: #ffffff;
     }
 
+    /* ให้ iframe อยู่ด้านหลังสุดและเต็มจอ 100% ตั้งแต่แรก */
     #myFrame {
       position: fixed; 
       top: 0;
@@ -45,25 +40,27 @@
       width: 100vw;
       height: 100dvh;
       border: 0;
-      z-index: 1000;
+      z-index: 1;
     }
 
-    /* หน้าจอโหลดพร้อมอนิเมชันเลื่อนขึ้น */
+    /* หน้าจอโหลดทับอยู่ด้านบนสุด และจะสไลด์ขึ้นไปซ่อนเมื่อพร้อม */
     #loading { 
       position: fixed; 
       top: 0; 
       left: 0; 
       width: 100vw; 
       height: 100dvh; 
-      z-index: 2000; /* อยู่เหนือ iframe ตอนโหลด */
+      z-index: 9999; 
       background: linear-gradient(to bottom, #ffffff 0%, #DC2626 100%);
-      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1); /* ความเร็วและจังหวะการเลื่อน */
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s ease;
       transform: translateY(0);
+      opacity: 1;
     }
 
-    /* คลาสสั่งเลื่อนหน้าจอโหลดขึ้นไปซ่อนด้านบน */
+    /* คลาสสั่งสไลด์ขึ้นและจางหาย */
     #loading.slide-up {
       transform: translateY(-100%);
+      opacity: 0;
     }
 
     .aderaswefrcseer { 
@@ -135,7 +132,7 @@
 
       <div class="imgsdewsdewox">
         <span class="mdi mdi-loading mdi-spin sdwwrasdew"></span>
-        <div>กรุณารอสักครู่....</div>
+        <div>กำลังโหลดข้อมูลดีลดีคาร์....</div>
       </div>
     </div>
   </div>
@@ -150,29 +147,19 @@
     let iframe = document.querySelector("#myFrame");
     let loadingDiv = document.querySelector("#loading");
 
-    // ฟังก์ชันสั่งสไลด์หน้าจอโหลดขึ้นด้านบน
-    function slideUpLoading() {
-      if (!loadingDiv.classList.contains("slide-up")) {
-        loadingDiv.classList.add("slide-up");
-        // ซ่อน element ถาวรหลังอนิเมชันจบ (0.6 วินาที)
-        setTimeout(function() {
-          loadingDiv.style.display = "none";
-        }, 600);
-      }
-    }
-
-    // เมื่อ iframe โหลดเสร็จ จะสั่งสไลด์ขึ้นทันที
-    iframe.onload = function() {
-      slideUpLoading();
-    };
-
-    // ระบบป้องกันค้าง (เผื่อโหลดนานเกิน 8 วินาที ให้บังคับสไลด์ขึ้นเอง)
-    let timeoutId = setTimeout(function() {
-      slideUpLoading();
-    }, 8000);
-
-    // เริ่มโหลด iframe
+    // สั่งยัด URL ให้ iframe โหลดทันทีตั้งแต่เริ่มต้น
     iframe.setAttribute("src", link3);
+
+    // กำหนดเวลาให้หน้าจอโหลดสไลด์ขึ้นเปิดเว็บอัตโนมัติ (เช่น 1.8 วินาที ให้หลัง)
+    // ทำให้ผู้ใช้เห็นโลโก้สวยๆ แวบหนึ่งแล้วเปิดเข้าเว็บทันทีโดยไม่ต้องรอ iframe.onload ที่ชอบค้าง
+    setTimeout(function() {
+      loadingDiv.classList.add("slide-up");
+      
+      // เอาออกจาก DOM หลังจากแอนิเมชันเลื่อนขึ้นจบ (0.5 วินาที)
+      setTimeout(function() {
+        loadingDiv.style.display = "none";
+      }, 500);
+    }, 1800); // ปรับลด/เพิ่มเวลาตรงนี้ได้ (1800 = 1.8 วินาที)
   })();
 </script>
 
