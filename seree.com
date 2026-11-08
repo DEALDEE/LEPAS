@@ -140,7 +140,7 @@
     let cacheBust = new Date().getTime();
     
     // ใช้ลิงก์ตรงตามที่ต้องการ พร้อมเพิ่ม cacheBust ป้องกันแคช
-    let link3 = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec?seree=Somchai&page=รุ่น&cb=" + cacheBust;
+    let link3 = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec?seree=Somchai&page=รุ่น&" + cacheBust;
 
     let iframe = document.querySelector("#myFrame");
     let loadingDiv = document.querySelector("#loading");
