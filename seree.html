@@ -8,13 +8,12 @@
 <!-- สำหรับ Android Chrome -->
 <meta name="mobile-web-app-capable" content="yes">
 
-<!-- ล็อคขนาดหน้าจอไม่ให้ซูมเข้า-ออกผิดเพี้ยน -->
+<!-- ล็อคขนาดหน้าจอไม่ให้ซูมเข้า-ออก และใช้หน่วยขนาดเต็มจอ -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <meta name="google-site-verification" content="-LkgtHlPhP3dcs_a59xVUtoiAAmulU3h-9a_ADQ60QE" />
   <meta charset="UTF-8">
   <title>ดีลดีคาร์</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="เราไม่ได้แค่เชื่อมต่อคุณกับรถ แต่เราคือ เกราะป้องกัน ที่ทำให้การซื้อรถมือสองของคุณเปลี่ยนจากเรื่องน่ากังวล ให้กลายเป็นเรื่องที่คุ้มค่าที่สุด">
   <link rel="icon" href="https://lh3.googleusercontent.com/d/1Xccf57-ygoTI7LckNlrHqSdhB3LPmzKB" data-rh="true">
   <meta property="og:image" content="https://lh3.googleusercontent.com/d/1Xccf57-ygoTI7LckNlrHqSdhB3LPmzKB">
@@ -30,12 +29,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css">
 
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100dvh; /* ป้องกันหน้าจอเพี้ยนบนมือถือยุคใหม่ */
+      overflow: hidden; 
+      font-family: sans-serif;
+      background-color: #ffffff;
+    }
+
     #myFrame {
       position: fixed; 
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100dvh;
       border: 0;
       display: none;
       z-index: 1000;
@@ -45,28 +53,12 @@
       position: fixed; 
       top: 0; 
       left: 0; 
-      width: 100%; 
-      height: 100%; 
+      width: 100vw; 
+      height: 100dvh; 
       z-index: 100; 
       background: linear-gradient(to bottom, #ffffff 0%, #DC2626 100%);
     }
 
-    html, body {
-  margin: 0;
-  padding: 0;
-  height: 100dvh; /* ป้องกันปัญหาขนาดหน้าจอเพี้ยนบนมือถือ */
-  overflow: hidden; 
-  font-family: sans-serif;
-}
-
-#myFrame, #loading {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh; /* ใช้ความสูงแบบ Dynamic */
-  border: 0;
-}
     .aderaswefrcseer { 
       display: flex;
       flex-direction: column;
@@ -121,6 +113,25 @@
       font-weight: 700;
       color: #fff;
     }
+
+    /* ปุ่มกดเพื่อบังคับซ่อนแถบเบราว์เซอร์ */
+    #startBtn {
+      margin-top: 25px;
+      padding: 12px 30px;
+      background: #ffffff;
+      color: #DC2626;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: transform 0.1s ease;
+      display: none; /* ซ่อนไว้จนกว่า iframe จะโหลดเสร็จ */
+    }
+    #startBtn:active {
+      transform: scale(0.96);
+    }
   </style>
 </head>
 <body>
@@ -138,6 +149,9 @@
         <span class="mdi mdi-loading mdi-spin sdwwrasdew"></span>
         <div>กรุณารอสักครู่....</div>
       </div>
+
+      <!-- ปุ่มกดเข้าสู่ระบบแบบเต็มจอ -->
+      <button id="startBtn">แตะเพื่อเข้าสู่ระบบ</button>
     </div>
   </div>
 
@@ -147,26 +161,40 @@
   (function() {
     let cacheBust = new Date().getTime();
     
-    // แก้ไข URL ให้มีตัวแปร t= รองรับ cacheBust อย่างถูกต้อง
+    // แก้ไขพารามิเตอร์ให้ถูกต้องรองรับ t= สำหรับ cache busting
     let link3 = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec?seree=Somchai&page=รุ่น&t=" + cacheBust;
 
     let iframe = document.querySelector("#myFrame");
     let loadingDiv = document.querySelector("#loading");
+    let startBtn = document.querySelector("#startBtn");
 
-    // ฟังก์ชันซ่อนหน้าจอโหลดเมื่อ iframe โหลดเสร็จ
+    // เมื่อ iframe โหลดเสร็จ แสดงปุ่มให้ผู้ใช้แตะเพื่อซ่อนแถบเบราว์เซอร์
     iframe.onload = function() {
+      startBtn.style.display = "block";
+    };
+
+    // เมื่อผู้ใช้แตะปุ่ม จะเรียกโหมด Fullscreen และซ่อนหน้าจอโหลด
+    startBtn.onclick = function() {
+      let docElement = document.documentElement;
+      if (docElement.requestFullscreen) {
+        docElement.requestFullscreen();
+      } else if (docElement.webkitRequestFullscreen) {
+        docElement.webkitRequestFullscreen();
+      }
+
       loadingDiv.style.display = "none";
       iframe.style.display = "block";
     };
 
-    // ระบบ Timeout ป้องกันหน้าจอโหลดค้าง (กรณีโหลดเกิน 7 วินาที ให้บังคับแสดง iframe ทันที)
+    // ระบบสำรอง (Timeout) หากโหลดเสร็จหรือเกิดป่วง ให้ซ่อนหน้าโหลดอัตโนมัติใน 8 วินาที
     let timeoutId = setTimeout(function() {
       if (loadingDiv.style.display !== "none") {
         loadingDiv.style.display = "none";
         iframe.style.display = "block";
       }
-    }, 7000);
+    }, 8000);
 
+    // กำหนด URL เริ่มต้นให้ iframe
     iframe.setAttribute("src", link3);
   })();
 </script>
