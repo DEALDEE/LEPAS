@@ -139,16 +139,25 @@
   (function() {
     let cacheBust = new Date().getTime();
     
-    // ใช้ลิงก์ตรงตามที่ต้องการ พร้อมเพิ่ม cacheBust ป้องกันแคช
-    let link3 = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec?seree=Somchai&page=รุ่น&" + cacheBust;
+    // แก้ไข URL ให้มีตัวแปร t= รองรับ cacheBust อย่างถูกต้อง
+    let link3 = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec?seree=Somchai&page=รุ่น&t=" + cacheBust;
 
     let iframe = document.querySelector("#myFrame");
     let loadingDiv = document.querySelector("#loading");
 
+    // ฟังก์ชันซ่อนหน้าจอโหลดเมื่อ iframe โหลดเสร็จ
     iframe.onload = function() {
       loadingDiv.style.display = "none";
       iframe.style.display = "block";
     };
+
+    // ระบบ Timeout ป้องกันหน้าจอโหลดค้าง (กรณีโหลดเกิน 7 วินาที ให้บังคับแสดง iframe ทันที)
+    let timeoutId = setTimeout(function() {
+      if (loadingDiv.style.display !== "none") {
+        loadingDiv.style.display = "none";
+        iframe.style.display = "block";
+      }
+    }, 7000);
 
     iframe.setAttribute("src", link3);
   })();
