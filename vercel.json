@@ -1,6 +1,18 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/LEPAS/(.*)", "destination": "/$1.html" },
-    { "source": "/(.*)", "destination": "/$1.html" }
+    {
+      "source": "/",
+      "destination": "/seree.html"
+    },
+    {
+      "source": "/LEPAS/:path*",
+      "destination": "/:path*"
+    },
+    {
+      "source": "/seree",
+      "destination": "/seree.html"
+    }
   ]
 }
