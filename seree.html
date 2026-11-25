@@ -141,25 +141,28 @@
 
 <script>
   (function() {
-    let cacheBust = new Date().getTime();
-    let link3 = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec?seree=Somchai&page=รุ่น&v=/" + cacheBust;
+    const cacheBust = Date.now();
+    const baseUrl = "https://script.google.com/macros/s/AKfycbxGFkGpxt8o8dlHlzIHvyjWaA6gGRinuiI9u3HmEh5HOlX9Z8vzustztY-K-R-piws6/exec";
+    
+    // กำหนดค่าที่ต้องการส่ง (ถ้ามี ID ค่อยใส่เพิ่มใน id)
+    const params = new URLSearchParams({
+      seree: "Somchai",
+      page: "รุ่น",
+      id: "", // ใส่ ID ตรงนี้ได้ถ้ามี เช่น "12345" หรือปล่อยว่างไว้
+      v: cacheBust
+    });
 
-    let iframe = document.querySelector("#myFrame");
-    let loadingDiv = document.querySelector("#loading");
+    const iframe = document.querySelector("#myFrame");
+    const loadingDiv = document.querySelector("#loading");
 
-    // สั่งยัด URL ให้ iframe โหลดทันทีตั้งแต่เริ่มต้น
-    iframe.setAttribute("src", link3);
+    iframe.setAttribute("src", `${baseUrl}?${params.toString()}`);
 
-    // กำหนดเวลาให้หน้าจอโหลดสไลด์ขึ้นเปิดเว็บอัตโนมัติ (เช่น 1.8 วินาที ให้หลัง)
-    // ทำให้ผู้ใช้เห็นโลโก้สวยๆ แวบหนึ่งแล้วเปิดเข้าเว็บทันทีโดยไม่ต้องรอ iframe.onload ที่ชอบค้าง
     setTimeout(function() {
       loadingDiv.classList.add("slide-up");
-      
-      // เอาออกจาก DOM หลังจากแอนิเมชันเลื่อนขึ้นจบ (0.5 วินาที)
       setTimeout(function() {
         loadingDiv.style.display = "none";
       }, 500);
-    }, 1800); // ปรับลด/เพิ่มเวลาตรงนี้ได้ (1800 = 1.8 วินาที)
+    }, 1800);
   })();
 </script>
 
