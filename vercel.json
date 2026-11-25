@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/LEPAS/(.*)", "destination": "/$1.html" },
+    { "source": "/(.*)", "destination": "/$1.html" }
+  ]
+}
