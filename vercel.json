@@ -1,13 +1,8 @@
 {
-  "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/seree.html"
-    },
-    {
-      "source": "/seree",
-      "destination": "/seree.html"
-    }
+    { "source": "/", "destination": "/seree.html" },
+    { "source": "/seree", "destination": "/seree.html" },
+    { "source": "/a/(.*)", "destination": "/$1.html" },
+    { "source": "/(.*)", "destination": "/$1.html" }
   ]
 }
