@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="เราไม่ได้แค่เชื่อมต่อคุณกับรถ แต่เราคือ เกราะป้องกัน ที่ทำให้การซื้อรถมือสองของคุณเปลี่ยนจากเรื่องน่ากังวล ให้กลายเป็นเรื่องที่คุ้มค่าที่สุด">
   <link rel="icon" href="https://lh3.googleusercontent.com/d/1LnEq91qsDH2KxQ6BbwQd14OhlWVxPmjh" data-rh="true">
-  <meta property="og:image" content=" https://lh3.googleusercontent.com/d/1BbWdCMpbZqFxZbU3hvrS7CMY14ybwsOQ">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/d/1BbWdCMpbZqFxZbU3hvrS7CMY14ybwsOQ">
 
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
@@ -38,166 +38,255 @@
       display: none;
       z-index: 1000;
     }
-</style>
 
-<style>
-  .loadewarapoper {
-    font-family: sans-serif;
-    box-sizing: border-box; /* สำคัญเพื่อไม่ให้ padding ดันขนาดเกิน 100vw */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 80vh;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    padding: 15px;
-    gap: 20px;
-  }
+    .loadewarapoper {
+      font-family: sans-serif;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 85vh;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 15px;
+      gap: 20px;
+    }
 
-  .tranasfeontainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; 
-    width: 100%;
-    max-width: 450px; /* จำกัดความกว้างไม่ให้ยืดกว้างเกินไปบนจอใหญ่ */
-    box-sizing: border-box;
-  }
+    .tranasfeontainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; 
+      width: 100%;
+      max-width: 450px;
+      box-sizing: border-box;
+    }
 
-  .nasweasode {
-    border: 2px solid #333;
-    padding: 8px 6px;
-    border-radius: 8px;
-    background: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1; 
-    min-width: 0; /* บังคับให้ flex item ยอมหดตัวและไม่ดันล้น */
-    box-sizing: border-box;
-  }
+    .nasweasode {
+      border: 2px solid #333;
+      padding: 8px 6px;
+      border-radius: 8px;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1; 
+      min-width: 0;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
 
-  .nasweasode span {
-    font-size: 13px;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
+    .nasweasode span.node-title {
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
 
-  .imageafsedery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 6px;
-    justify-content: center;
-    width: 100%;
-    min-width: 0;
-  }
+    .imageafsedery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 80px; /* ล็อกความสูงให้เท่ากันทั้งซ้ายและขวา */
+      min-width: 0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
 
-  .imageafsedery img {
-    width: 100%; 
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
+    .imageafsedery img {
+      width: 100%; 
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
 
-  .datasewrene {
-    flex-shrink: 0; 
-    width: 40px; /* ลดความกว้างเส้นเชื่อมลงให้อยู่ในสัดส่วนที่พอดี */
-    height: 4px;
-    background: #ddd;
-    position: relative;
-    overflow: hidden; 
-    border-radius: 2px;
-  }
+    /* กล่องแสดงไอคอนแหล่งที่มา */
+    .source-icon-box {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+    }
 
-  .loadixdswreext {
-    color: #666;
-    font-size: 13px;
-    text-align: center;
-    padding: 0 10px;
-  }
+    .source-icon-box .mdi {
+      font-size: 46px;
+    }
 
-  .dataswrdweac {
-    position: absolute;
-    top: 0;
-    left: -30%;
-    width: 30%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, #004aad, #ffffff);
-    border-radius: 2px;
-    animation: transfer 1.2s infinite linear;
-  }
+    .datasewrene {
+      flex-shrink: 0; 
+      width: 40px;
+      height: 4px;
+      background: #ddd;
+      position: relative;
+      overflow: hidden; 
+      border-radius: 2px;
+    }
 
-  @keyframes transfer {
-    0% {
+    .loadixdswreext {
+      color: #666;
+      font-size: 13px;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .dataswrdweac {
+      position: absolute;
+      top: 0;
       left: -30%;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #004aad, #ffffff);
+      border-radius: 2px;
+      animation: transfer 1.2s infinite linear;
     }
-    100% {
-      left: 100%;
-    }
-  }
-</style>
 
+    @keyframes transfer {
+      0% { left: -30%; }
+      100% { left: 100%; }
+    }
+  </style>
+</head>
 <body>
 
 <div class="loadewarapoper" id="loading">
   <div class="tranasfeontainer">
-    <div class="nasweasode">
-      <span>ดีลดีคาร์</span>
-      <div class="imageafsedery">
-        <img src="https://lh3.googleusercontent.com/d/1LnEq91qsDH2KxQ6BbwQd14OhlWVxPmjh">
+    <!-- ฝั่งซ้าย: แหล่งที่มา (Source) -->
+    <div class="nasweasode" id="sourceNode">
+      <span class="node-title" id="sourceName">กำลังตรวจสอบ...</span>
+      <div class="imageafsedery" id="sourceVisual">
+        <!-- ไอคอนแหล่งที่มาจะถูกสร้างด้วย JS -->
       </div>
     </div>
 
+    <!-- เส้นแอนิเมชันตรงกลาง -->
     <div class="datasewrene">
       <div class="dataswrdweac"></div>
     </div>
 
-    <div class="nasweasode">
-      <span>ดีลดีคาร์</span>
+    <!-- ฝั่งขวา: เว็บไซต์ปลายทาง (Destination) -->
+    <div class="nasweasode" style="border-color: #004aad;">
+      <span class="node-title" style="color: #004aad;">ดีลดีคาร์</span>
       <div class="imageafsedery" id="serverGallery"></div>
     </div>
   </div>
 
-  <div class="loadixdswreext"><span class="mdi mdi-loading mdi-spin"></span> กำลังถ่ายโอนข้อมูลไปยังปลายทาง...</div>
+  <div class="loadixdswreext">
+    <span class="mdi mdi-loading mdi-spin"></span> 
+    <span id="loadingStatusText">กำลังเชื่อมต่อข้อมูลไปยังเว็บไซต์...</span>
+  </div>
 </div>
 
-  
-  <iframe id="myFrame" src=""></iframe>
+<iframe id="myFrame" src=""></iframe>
 
+<script>
+  // ฟังก์ชันตรวจจับแหล่งที่มา (Facebook, LINE, Google, ฯลฯ)
+  function detectTrafficSource() {
+    const ref = (document.referrer || "").toLowerCase();
+    const ua = (navigator.userAgent || "").toLowerCase();
+    const search = (window.location.search || "").toLowerCase();
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // 1. ดึง URL จาก meta tag og:image
-      const ogImageMeta = document.querySelector('meta[property="og:image"]');
-      
-      if (ogImageMeta) {
-        // ใช้ .trim() เพื่อตัดช่องว่างหน้า URL ออก
-        const imageUrl = ogImageMeta.getAttribute("content").trim();
-        const gallery = document.getElementById("serverGallery");
+    // 1. ตรวจสอบ LINE (จาก In-App Browser หรือ Referrer)
+    if (ua.includes("line") || ref.includes("line.me") || search.includes("utm_source=line") || search.includes("openexternalbrowser")) {
+      return {
+        name: "LINE",
+        icon: "mdi-chat-processing",
+        color: "#06C755",
+        bg: "#e6f9ee"
+      };
+    }
 
-        // ตัวอย่าง: หากต้องการแสดงภาพเดียวกันหลายภาพ (เช่น 3 ภาพ)
-        const totalImages = 1; 
+    // 2. ตรวจสอบ Facebook (จาก In-App Browser, Referrer หรือ fbclid)
+    if (ua.includes("fban") || ua.includes("fbav") || ref.includes("facebook.com") || ref.includes("fb.com") || search.includes("fbclid") || search.includes("utm_source=facebook")) {
+      return {
+        name: "Facebook",
+        icon: "mdi-facebook",
+        color: "#1877F2",
+        bg: "#e8f1fe"
+      };
+    }
 
-        for (let i = 0; i < totalImages; i++) {
-          const img = document.createElement("img");
-          img.src = imageUrl;
-          img.alt = `Server Image ${i + 1}`;
-          
-          // ใส่ภาพลงไปในส่วนของ SERVER
-          gallery.appendChild(img);
-        }
-      }
-    });
-  </script>
+    // 3. ตรวจสอบ Google (จาก Search, Referrer หรือ gclid)
+    if (ref.includes("google.") || search.includes("gclid") || search.includes("utm_source=google")) {
+      return {
+        name: "Google",
+        icon: "mdi-google",
+        color: "#DB4437",
+        bg: "#fce8e6"
+      };
+    }
+
+    // 4. ตรวจสอบ TikTok
+    if (ua.includes("tiktok") || ua.includes("musical_ly") || ref.includes("tiktok.com") || search.includes("ttclid")) {
+      return {
+        name: "TikTok",
+        icon: "mdi-music-note",
+        color: "#000000",
+        bg: "#f0f0f0"
+      };
+    }
+
+    // 5. ตรวจสอบ Instagram
+    if (ua.includes("instagram") || ref.includes("instagram.com")) {
+      return {
+        name: "Instagram",
+        icon: "mdi-instagram",
+        color: "#E1306C",
+        bg: "#fceaf0"
+      };
+    }
+
+    // 6. กรณีเข้าโดยตรง หรือแหล่งที่มาอื่นๆ
+    return {
+      name: "เบราว์เซอร์",
+      icon: "mdi-web",
+      color: "#555555",
+      bg: "#eeeeee"
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // อัปเดตกล่องฝั่งซ้าย (แหล่งที่มา)
+    const source = detectTrafficSource();
+    const sourceNode = document.getElementById("sourceNode");
+    const sourceName = document.getElementById("sourceName");
+    const sourceVisual = document.getElementById("sourceVisual");
+    const statusText = document.getElementById("loadingStatusText");
+
+    sourceNode.style.borderColor = source.color;
+    sourceName.textContent = source.name;
+    sourceName.style.color = source.color;
+    sourceVisual.innerHTML = `
+      <div class="source-icon-box" style="background-color: ${source.bg}; color: ${source.color};">
+        <span class="mdi ${source.icon}"></span>
+      </div>
+    `;
+    statusText.textContent = `กำลังนำคุณจาก ${source.name} เข้าสู่เว็บไซต์ดีลดีคาร์...`;
+
+    // อัปเดตกล่องฝั่งขวา (รูปภาพจาก og:image)
+    const ogImageMeta = document.querySelector('meta[property="og:image"]');
+    if (ogImageMeta) {
+      const imageUrl = ogImageMeta.getAttribute("content").trim();
+      const gallery = document.getElementById("serverGallery");
+      const img = document.createElement("img");
+      img.src = imageUrl;
+      img.alt = "ดีลดีคาร์";
+      gallery.appendChild(img);
+    }
+  });
+</script>
   
 <script>
   (function() {
@@ -208,10 +297,10 @@
       fullPath = fullPath.substring(1);
     }
     
-    // ถ้าเจอเครื่องหมาย & ให้ตัดข้อความตั้งแต่ & ตัวแรกออกไปเลย เพื่อตัดพวก fbclid ทิ้ง
-    let ampersandIndex = fullPath.indexOf("&");
-    if (ampersandIndex !== -1) {
-      fullPath = fullPath.substring(0, ampersandIndex);
+    // ตัดพารามิเตอร์ติดตามของโซเชียลออก (รองรับทั้ง ? และ &)
+    fullPath = fullPath.split('&')[0];
+    if (fullPath.startsWith('?fbclid=') || fullPath.startsWith('?gclid=') || fullPath.startsWith('?utm_') || fullPath.startsWith('?openExternalBrowser')) {
+      fullPath = "";
     }
     
     let combinedId = fullPath;
